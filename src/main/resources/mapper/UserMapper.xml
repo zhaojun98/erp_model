@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdqn.sys.dao.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bdqn.sys.entity.User">
+        <id column="id" property="id" />
+        <result column="loginname" property="loginname" />
+        <result column="loginpwd" property="loginpwd" />
+        <result column="name" property="name" />
+        <result column="address" property="address" />
+        <result column="sex" property="sex" />
+        <result column="deptid" property="deptid" />
+        <result column="hiredate" property="hiredate" />
+        <result column="mgr" property="mgr" />
+        <result column="type" property="type" />
+        <result column="imgpath" property="imgpath" />
+        <result column="available" property="available" />
+        <result column="salt" property="salt" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, loginname, loginpwd, name, address, sex, deptid, hiredate, mgr, type, imgpath, available, salt, remark
+    </sql>
+
+    <select id="findUserListByPage" resultType="com.bdqn.sys.entity.User">
+        SELECT u.*,d.title deptName,m.name mgrName FROM sys_user u
+        LEFT JOIN sys_user m ON m.id = u.mgr
+        LEFT JOIN sys_dept d ON d.id = u.deptid
+        <where>
+            <if test="user.loginname!=null and user.loginname!=''">
+                and u.loginname like concat('%',#{user.loginname},'%')
+            </if>
+            <if test="user.name!=null and user.name!=''">
+                and u.name like concat('%',#{user.name},'%')
+            </if>
+            <if test="user.startTime!=null">
+                and u.hiredate &gt; #{user.startTime}
+            </if>
+            <if test="user.endTime!=null">
+                and u.hiredate &lt; #{user.endTime}
+            </if>
+            <if test="user.deptid!=null">
+                and u.deptid = #{user.deptid}
+            </if>
+        </where>
+    </select>
+
+</mapper>
