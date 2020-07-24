@@ -32,11 +32,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- 内置tomcat -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
+
         <!-- 单元测试 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
